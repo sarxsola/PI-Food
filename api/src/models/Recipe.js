@@ -4,9 +4,41 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('recipe', {
-    name: {
+
+    id: {
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false
+    },
+
+    title: {
       type: DataTypes.STRING,
       allowNull: false,
     },
+
+    summary: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+
+    spoonacularScore: {
+      type: DataTypes.INTEGER,
+    },
+    
+    healthScore: {
+      type: DataTypes.INTEGER,
+    },
+
+    instructions: {
+      type: DataTypes.TEXT
+    },
+
+    diet: {
+      type: DataTypes.ARRAY(DataTypes.STRING)
+    },
+
+    
+
   });
 };
