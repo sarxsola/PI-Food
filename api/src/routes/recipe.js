@@ -2,19 +2,27 @@ const router = require('express').Router();
 const { Recipe } = require('../db');
 
 
-router.post('/recipe', async (req, res) => {
-    const {title, summary, spoonacularScore, healthScore, instructions, diet} = req.body;
+router.post('/form', async (req, res) => {
+    const { title, summary, spoonacularScore, healthScore, instructions, diets } = req.body;
 
-    let createdRecipe = await Recipe.create({
-        title,
-        summary,
-        spoonacularScore,
-        healthScore,
-        instructions,
-        diet: [diet]
-    });
-
-    res.status(200).json(createdRecipe);
+    try {
+        
+        let [createdRecipe] = await Recipe.findOrCreate({
+            where:{
+                title,
+                summary,
+                spoonacularScore,
+                healthScore,
+                instructions
+            }
+        });
+        
+        createdRecipe.setDiets(diets);
+        res.status(200).json(createdRecipe);
+    }
+    catch(error){
+        res.status(400).json(error);
+    }
 });
 
 module.exports = router;

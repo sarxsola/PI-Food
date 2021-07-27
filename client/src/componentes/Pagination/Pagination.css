@@ -1,0 +1,28 @@
+.page-numbers {
+    margin-top: 3%;
+    padding: 5%;
+    display: flex;
+    justify-content: space-evenly;
+    font-weight: 600;
+    background-color: rgba(0, 0, 0, 0.452);
+    color: white;
+}
+
+.page-numbers li {
+    cursor: pointer;
+}
+
+.orderBy {
+    display: flex;
+    justify-content: space-around;
+}
+
+.orderBy label {
+    color: white;
+    font-weight: 600;
+}
+
+.order {
+    display: flex;
+    flex-direction: column;
+}

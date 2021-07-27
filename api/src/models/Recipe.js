@@ -32,13 +32,7 @@ module.exports = (sequelize) => {
 
     instructions: {
       type: DataTypes.TEXT
-    },
-
-    diet: {
-      type: DataTypes.ARRAY(DataTypes.STRING)
-    },
-
-    
+    }  
 
   });
 };

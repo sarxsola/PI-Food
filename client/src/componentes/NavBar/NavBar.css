@@ -1,0 +1,26 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F25C54;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li a{
+    padding-right: 25px;
+    text-decoration: none;
+    color: white;
+}
+
+.list-item {
+    display: flex;
+}
+
+.logo {
+    padding-left: 25px;
+    font-size: 3em;
+    color: white;
+}

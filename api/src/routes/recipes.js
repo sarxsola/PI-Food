@@ -8,77 +8,181 @@ const { Op } = require("sequelize");
 const { API_KEY } = process.env;
 
 router.get('/recipes', async (req, res) => {
+
+    const titleQuery = req.query.name;
+
     try {
-        const titleQuery = req.query.name;
-
-        if (titleQuery) {
-
-            const recipesDB = await Recipe.findAll({
-                where: {
-                    title: {
-                        [Op.substring]: titleQuery
-                    }
+    if (titleQuery) {
+        const recipesDB = await Recipe.findAll({
+            where: {
+                title: {
+                    [Op.substring]: titleQuery
                 }
-            }
-            );
+            },
+            include: Diet
+        });
 
-            res.json(recipesDB);
-            
-            let numberOfRecipesToFetch = 9 - recipesDB.length;
+        recipesDBClean = [];
 
-            const recipesApi = await fetch(`https://api.spoonacular.com/recipes/complexSearch?titleMatch=${titleQuery}&number=${numberOfRecipesToFetch}&apiKey=${API_KEY}`);
-            const dataApi = await recipesApi.json();
+        recipesDB.map((recipe) => {
+            recipesDBClean.push(
+                {
+                    id: recipe.id,
+                    title: recipe.title,
+                    summary: recipe.summary,
+                    spoonacularScore: recipe.spoonacularScore,
+                    healthScore: recipe.healthScore,
+                    instructions: recipe.instructions,
+                    diets: recipe.diets.map((diet) => diet.name)
+                }
+            )
+        })
 
-            if (recipesDB.length === 0) {
-                res.json(dataApi);
+
+        let numberOfRecipesToFetch = 9 - recipesDB.length;
+
+        const recipesApi = await fetch(`https://api.spoonacular.com/recipes/complexSearch?titleMatch=${titleQuery}&addRecipeInformation=true&number=${numberOfRecipesToFetch}&apiKey=${API_KEY}`);
+        let recipesApiClean = [];
+
+        let dataApi = await recipesApi.json();
+
+        dataApi.results.map((recipe) => {
+            recipesApiClean.push({
+                id: recipe.id,
+                title: recipe.title,
+                summary: recipe.summary ? recipe.summary.replace(/<[^>]*>?/gm, '') : "This recipe doesn't have summary",
+                spoonacularScore: recipe.spoonacularScore,
+                healthScore: recipe.healthScore,
+                instructions: recipe.instructions ? recipe.instructions.replace(/<[^>]*>?/gm, '') : "This recipe doesn't have instructions",
+                diets: recipe.diets,
+                image: recipe.image
+            })
+        })
+
+
+        if (recipesDBClean.length < 1) {
+            if (recipesApiClean.length === 0) {
+                res.status(400).json("There's no recipe with that name");
             }
             else {
-
-                // let allRecipes = dataApi.concat(recipesDB);
-                // console.log(allRecipes);
-                // res.json(allRecipes);
+                res.json(recipesApiClean);
             }
         }
         else {
-            const recipesDB = await Recipe.findAll({
-                include: Diet
-            });
-
-            let numberOfRecipesToFetch = 100 - recipesDB.length;
-
-            const recipesApi = await fetch(`https://api.spoonacular.com/recipes/complexSearch?number=${numberOfRecipesToFetch}&addRecipeInformation=true&apiKey=${API_KEY}`);
-            const data = await recipesApi.json();
-
-            res.send(data);
-
-            // if(!recipesDB) res.send(recipesDB);
-            // else {
-            //     let allRecipes = [];
-
-            // }
+            let allRecipes = recipesDBClean.concat(recipesApiClean);
+            res.json(allRecipes);
         }
     }
-    catch (error) {
-        throw error;
+    else {
+        const recipesDB = await Recipe.findAll({ include: Diet });
+
+        recipesDBClean = [];
+
+        recipesDB.map((recipe) => {
+            recipesDBClean.push({
+                id: recipe.id,
+                title: recipe.title,
+                summary: recipe.summary,
+                spoonacularScore: recipe.spoonacularScore,
+                healthScore: recipe.healthScore,
+                instructions: recipe.instructions,
+                diets: recipe.diets.map((diet) => diet.name)
+            })
+        })
+
+
+        let numberOfRecipesToFetch = 100 - recipesDB.length;
+        const recipesApi = await fetch(`https://api.spoonacular.com/recipes/complexSearch?number=${numberOfRecipesToFetch}&addRecipeInformation=true&apiKey=${API_KEY}`);
+
+        console.log('   1   ');
+
+        
+        let dataApi = await recipesApi.json();
+        
+        
+        const recipesApiClean = [];
+
+        dataApi.results.map((recipe) => {
+            recipesApiClean.push({
+                id: recipe.id,
+                title: recipe.title,
+                spoonacularScore: recipe.spoonacularScore,
+                diets: recipe.diets,
+                image: recipe.image
+            })
+        })
+
+
+
+
+
+
+        let allRecipes = recipesDBClean.concat(recipesApiClean);
+
+
+
+        res.json(allRecipes);
+    }
+
+    }
+    catch(err){
+        res.json(err);
     }
 
 });
 
 router.get('/recipes/:idReceta', async (req, res) => {
-    const response = await fetch(`https://api.spoonacular.com/recipes/${idReceta}/information?apiKey=${API_KEY}`);
-    const recipe = await response.json();
-    const data = {
-        title: recipe.title,
-        image: recipe.image,
-        dishTypes: recipe.dishTypes,
-        diets: recipe.diets,
-        summary: recipe.summary,
-        spoonacularScore: recipe.spoonacularScore,
-        healthScore: recipe.healthScore,
-        instructions: recipe.instructions
-    };
 
-    res.json(data);
+    let idReceta = req.params.idReceta;
+
+    if (idReceta.length === 36) {
+
+        recipeDBClean = {};
+
+        try {
+            const recipe = await Recipe.findByPk(
+                idReceta,
+                { include: Diet }
+            );
+
+            recipeDBClean = {
+                id: recipe.id,
+                title: recipe.title,
+                summary: recipe.summary,
+                spoonacularScore: recipe.spoonacularScore,
+                healthScore: recipe.healthScore,
+                instructions: recipe.instructions,
+                diets: recipe.diets.map((diet) => diet.name)
+            }
+
+            res.status(200).json(recipeDBClean);
+        }
+        catch {
+            res.status(400).send('ROMPISTE TODO');
+        }
+    }
+    else {
+        try {
+            const response = await fetch(`https://api.spoonacular.com/recipes/${idReceta}/information?apiKey=${API_KEY}`);
+            const recipe = await response.json();
+            const data = {
+                title: recipe.title,
+                image: recipe.image,
+                dishTypes: recipe.dishTypes,
+                diets: recipe.diets,
+                summary: recipe.summary.replace(/<[^>]*>?/gm, ''),                
+                spoonacularScore: recipe.spoonacularScore,
+                healthScore: recipe.healthScore,
+                instructions: recipe.instructions.replace(/<[^>]*>?/gm, ''),
+                image: recipe.image
+            };
+
+            res.status(200).json(data);
+        }
+        catch {
+            res.status(400).send('ROMPISTE TODO');
+        }
+    }
 });
 
 module.exports = router;

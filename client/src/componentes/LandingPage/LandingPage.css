@@ -1,0 +1,49 @@
+.left {
+    padding-top: 15%;
+    text-align: center;
+    float: left;
+    width: 50%;
+}
+
+.right {
+    margin-left: 50%;
+}
+
+.landingImage {
+    width: 100%;
+}
+
+.findButton {
+    background:    #F27059;
+    border: none;
+    border-radius: 10px;
+    padding:       10px 20px;
+    color:         #ffffff;
+    display:       inline-block;
+    font:          normal bold 26px/1 "Open Sans", sans-serif;
+    text-align:    center;
+    margin-right: 50px;
+}
+
+.createButton {
+    background:    #f4845f00;
+    border: 1px solid #F27059;
+    border-radius: 10px;
+    padding:       10px 20px;
+    color:         #F27059;
+    display:       inline-block;
+    font:          normal bold 26px/1 "Open Sans", sans-serif;
+    text-align:    center;
+}
+
+.title {
+    margin-bottom: 10%;
+    color: #F27059;
+    font-size: 5em;
+}
+
+.stats {
+    margin-top: 75px;
+    font-size: large;
+    color: #F4845F;
+}
