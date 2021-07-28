@@ -1,6 +1,8 @@
 import React from 'react';
 import './Recipe.css'
 import { connect } from "react-redux";
+import defaultImage from '../../images/food.jpg'
+
 
 
 const Recipe = ({ recipe }) => {
@@ -34,7 +36,7 @@ const Recipe = ({ recipe }) => {
                             }) : <li>There's no dish type for this recipe.</li>
                         }
                     </span>
-                    <img src={recipe.image} alt="" className="card-mediaRecipe" />
+                    <img src={recipe.image ? recipe.image : defaultImage} alt="" className="card-mediaRecipe" />
                     <h2 className="card-titleRecipe">{recipe.title}</h2>
                     <p>{recipe.summary}</p>
 

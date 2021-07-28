@@ -3,7 +3,7 @@ const { Recipe } = require('../db');
 
 
 router.post('/form', async (req, res) => {
-    const { title, summary, spoonacularScore, healthScore, instructions, diets } = req.body;
+    const { title, summary, spoonacularScore, healthScore, instructions, diets, image } = req.body;
 
     try {
         
@@ -13,7 +13,8 @@ router.post('/form', async (req, res) => {
                 summary,
                 spoonacularScore,
                 healthScore,
-                instructions
+                instructions,
+                image
             }
         });
         

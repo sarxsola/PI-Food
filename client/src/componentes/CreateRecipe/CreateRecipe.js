@@ -12,8 +12,24 @@ const CreateRecipe = ({ createRecipe }) => {
         spoonacularScore: 0,
         healthScore: 0,
         instructions: '',
-        diets: []
+        diets: [],
+        image: ''
     });
+
+    function handleImage(e){
+        var filesSelected = e.target.files;
+        if (filesSelected.length > 0){
+            var fileToLoad = filesSelected[0];
+            var fileReader = new FileReader();
+            fileReader.onload = function(fileLoadedEvent){
+                setRecipe({
+                    ...recipe,
+                    image:fileLoadedEvent.target.result
+                })
+            };
+            fileReader.readAsDataURL(fileToLoad);
+        }
+    }
 
     function handleChange(event) {
 
@@ -31,13 +47,12 @@ const CreateRecipe = ({ createRecipe }) => {
         }
     }
 
-    const types = ['gluten free', 'ketogenic', 'vegetarian', 'lacto vegetarian'
-        , 'ovo vegetarian', 'vegan', 'pescetarian', 'paleo', 'primal', 'whole30']
+    const types = ['gluten free', 'ketogenic', 'vegetarian', 'dairy free'
+        , 'lacto ovo vegetarian', 'vegan', 'pescetarian', 'paleo', 'primal', 'whole30']
 
     let i = 1;
 
     async function handleSubmit(e) {
-        console.log(recipe)
         e.preventDefault();
         await createRecipe(recipe);
         // window.location = 'http://localhost:3000/recipes'
@@ -71,6 +86,10 @@ const CreateRecipe = ({ createRecipe }) => {
                         })
                     }
                 </div>
+                <label className='image'>
+                    <p>Image:</p>
+                    <input type="file" name="image" id='inputFileToLoad' className="field" onChange={(e)=>handleImage(e)}/>
+                </label>
 
                 <input type="submit" value="Create" />
             </form>

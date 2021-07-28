@@ -33,7 +33,8 @@ router.get('/recipes', async (req, res) => {
                     spoonacularScore: recipe.spoonacularScore,
                     healthScore: recipe.healthScore,
                     instructions: recipe.instructions,
-                    diets: recipe.diets.map((diet) => diet.name)
+                    diets: recipe.diets.map((diet) => diet.name),
+                    image: recipe.image ? recipe.image : ''
                 }
             )
         })
@@ -55,10 +56,11 @@ router.get('/recipes', async (req, res) => {
                 healthScore: recipe.healthScore,
                 instructions: recipe.instructions ? recipe.instructions.replace(/<[^>]*>?/gm, '') : "This recipe doesn't have instructions",
                 diets: recipe.diets,
-                image: recipe.image
+                image: recipe.image ? recipe.image : ''
             })
         })
 
+        console.log(recipesApiClean)
 
         if (recipesDBClean.length < 1) {
             if (recipesApiClean.length === 0) {
@@ -86,15 +88,14 @@ router.get('/recipes', async (req, res) => {
                 spoonacularScore: recipe.spoonacularScore,
                 healthScore: recipe.healthScore,
                 instructions: recipe.instructions,
-                diets: recipe.diets.map((diet) => diet.name)
+                diets: recipe.diets.map((diet) => diet.name),
+                image: recipe.image ? recipe.image : ''
             })
         })
 
 
         let numberOfRecipesToFetch = 100 - recipesDB.length;
         const recipesApi = await fetch(`https://api.spoonacular.com/recipes/complexSearch?number=${numberOfRecipesToFetch}&addRecipeInformation=true&apiKey=${API_KEY}`);
-
-        console.log('   1   ');
 
         
         let dataApi = await recipesApi.json();
@@ -152,7 +153,8 @@ router.get('/recipes/:idReceta', async (req, res) => {
                 spoonacularScore: recipe.spoonacularScore,
                 healthScore: recipe.healthScore,
                 instructions: recipe.instructions,
-                diets: recipe.diets.map((diet) => diet.name)
+                diets: recipe.diets.map((diet) => diet.name),
+                image: recipe.image ? recipe.image : ''
             }
 
             res.status(200).json(recipeDBClean);

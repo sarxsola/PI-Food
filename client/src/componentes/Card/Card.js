@@ -8,7 +8,6 @@ const Card = ({cardID, cardScore, cardTitle, cardDiets, cardImage, getRecipeDeta
 
     function handleClickRecipe() {
         getRecipeDetail(cardID);
-        console.log('CLICK');
     }
 
     return (

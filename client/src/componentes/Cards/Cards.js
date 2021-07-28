@@ -1,10 +1,10 @@
 import React from 'react'
 import './Cards.css';
 import Card from '../Card/Card.js';
+import defaultImage from '../../images/food.jpg'
 
 const Cards = ({recipes}) => {
 
-    console.log(recipes.length);
 
     return (
 
@@ -19,7 +19,7 @@ const Cards = ({recipes}) => {
                     cardScore={recipe.spoonacularScore}
                     cardTitle={recipe.title}
                     cardDiets={recipe.diets}
-                    cardImage={recipe.image}
+                    cardImage={recipe.image ? recipe.image : defaultImage}
                     
                     />
                 

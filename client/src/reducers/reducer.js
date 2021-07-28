@@ -3,7 +3,7 @@
 
 const initialState = {
     recipes: [],
-    recipes2Order: [],
+    recipesCopy: [],
     recipeDetail: {}
 }
 
@@ -15,7 +15,7 @@ function recipeReducer(state = initialState, action) {
             return {
                 ...state,
                 recipes: action.payload,
-                recipes2Order: action.payload
+                recipesCopy: action.payload
             }
 
         case 'CREATE_RECIPE':
@@ -28,7 +28,7 @@ function recipeReducer(state = initialState, action) {
             return {
                 ...state,
                 recipes: action.payload,
-                recipes2Order: action.payload
+                recipesCopy: action.payload
             }
 
         case 'GET_RECIPE_DETAIL':
@@ -38,7 +38,7 @@ function recipeReducer(state = initialState, action) {
             }
 
         case 'SORT_BY_SCORE':
-            let array = [...state.recipes2Order];
+            let array = [...state.recipesCopy];
             if(action.payload === 'ASC'){
                 return {
                     ...state,
@@ -61,7 +61,7 @@ function recipeReducer(state = initialState, action) {
             }
 
         case 'SORT_BY_NAME':
-            let array1 = [...state.recipes2Order];
+            let array1 = [...state.recipesCopy];
             if(action.payload === 'ASC'){
                 return {
                     ...state,
@@ -75,13 +75,44 @@ function recipeReducer(state = initialState, action) {
             else {
                 return {
                     ...state,
-                    recipes: array1.sort(function(a, b){
+                    recipes: recipesFilter.sort(function(a, b){
                         if(a.title.toUpperCase() > b.title.toUpperCase()) return -1;
                         if(b.title.toUpperCase() > a.title.toUpperCase()) return 1;
                         return 0;
                     })
                 }
             }
+
+        case 'FILTER':
+            // let recipesFilter = [...state.recipesCopy];
+            // let array2State = [];
+
+            // action.payload = action.payload.sort().toString();
+            // let x = recipesFilter.map((recipe) => {
+            //     if(recipe.diets){
+            //         console.log('ola');
+            //         recipe.diets = recipe.diets.sort().toString();
+            //         console.log(recipe.diets);
+            //         if(action.payload === recipe.diets){
+            //             console.log('iupi')
+            //         }
+            //     }
+            // })
+
+            let recipesFilter= [...state.recipesCopy]
+            if(action.payload === 'lucho'){
+                return{
+                    ...state,
+                    recipes: recipesFilter
+                }
+            }
+            if(action.payload !== 'lucho'){
+                return{
+                    ...state,
+                    recipes: recipesFilter.filter(recipe=> recipe.diets.includes(action.payload))
+                }
+            }
+
     }
 
     return state;

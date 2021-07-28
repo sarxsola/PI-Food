@@ -99,4 +99,5 @@ html {
   
   .card-mediaRecipe {
     margin: 30px auto;
+    max-width: 45vh;
   }

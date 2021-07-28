@@ -8,7 +8,6 @@ const navBar = (props) => {
 
     function handleClickRecipe() {
         props.getAllRecipes();
-        console.log('CLICK');
     }
 
 

@@ -8,11 +8,10 @@ import '../Recipes/Recipes.css'
 import './Pagination.css'
 import OrderByScore from '../OrderByScore/OrderByScore';
 import OrderByName from '../OrderByName/OrderByName';
-
+import Filter from '../Filter/Filter';
 
 const Pagination = ({ recipes }) => {
 
-    console.log(recipes);
 
     const [state, setState] = useState({
         recipes: recipes,
@@ -37,12 +36,13 @@ const Pagination = ({ recipes }) => {
         });
     }
 
+    
     const indexOfLastTodo = (state.currentPage * state.recipesPerPage);
     const indexOfFirstTodo = indexOfLastTodo - state.recipesPerPage;
     const currentTodos = state.recipes.slice(indexOfFirstTodo, indexOfLastTodo);
     const renderTodos = currentTodos.map((todo, index) => {
         return <li key={index}>{todo}</li>;
-    });
+    })
 
     const pageNumbers = [];
     for (let i = 1; i <= Math.ceil(recipes.length / state.recipesPerPage); i++) {
@@ -61,14 +61,12 @@ const Pagination = ({ recipes }) => {
         );
     });
 
-    console.log(renderTodos)
     let renderTodosClean = []
 
-    renderTodos.map((recipe) => {
+    renderTodos.length > 0 ? renderTodos.map((recipe) => {
         renderTodosClean.push(recipe.props.children)
-    });
+    }) : <p>There's no recipe with that name</p>
 
-    console.log(renderTodosClean);
 
 
     return (
@@ -81,6 +79,10 @@ const Pagination = ({ recipes }) => {
                 <OrderByScore />
                 <OrderByName />
             </div>
+            <div className='filterBy'>
+                <Filter />
+            </div>
+            
             <div className='pagination'>
                 <ul className='recipesPagination'>
                     <Cards recipes={renderTodosClean} />

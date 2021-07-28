@@ -4,7 +4,7 @@ export function getAllRecipes(){
         .then(response => response.json())
         .then(json => {
             dispatch({ type: 'GET_ALL_RECIPES', payload: json});
-        });
+        })
     };
 }
 
@@ -50,4 +50,8 @@ export function sortByName(data){
 
 export function sortByScore(data){
     return {type: "SORT_BY_SCORE", payload: data}
+}
+
+export function filter(data){
+    return {type: "FILTER", payload: data}
 }

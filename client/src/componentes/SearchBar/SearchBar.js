@@ -12,7 +12,6 @@ const SearchBar = (props) => {
 
     function handleChange(event){
 
-        console.log(event.target.value)
 
         setRecipeTitle({
             ...recipeTitle,
@@ -21,7 +20,6 @@ const SearchBar = (props) => {
     }
 
     function handleSubmit(event){
-        console.log('TIRASTE SUBMIT.');
         event.preventDefault();
         props.getRecipe(recipeTitle.recipe);
     }

@@ -107,6 +107,7 @@ html {
 
 .card-media {
   float: right;
+  max-width: 312px;
 }
 
 .link {

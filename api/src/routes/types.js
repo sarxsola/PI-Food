@@ -2,8 +2,8 @@ const router = require('express').Router();
 
 const { Diet } = require('../db');
 
-const types = ['gluten free', 'ketogenic', 'vegetarian', 'lacto vegetarian'
-, 'ovo vegetarian', 'vegan', 'pescetarian', 'paleo', 'primal', 'whole30']
+const types = ['gluten free', 'ketogenic', 'vegetarian', 'dairy free'
+, 'lacto ovo vegetarian', 'vegan', 'pescetarian', 'paleo', 'primal', 'whole30']
 
 router.get('/types', async (req, res) => {
 
