@@ -40,8 +40,8 @@ For this project we consumed the [Spoonacular API](https://spoonacular.com/food-
 ---
 
 ### Demo
-
-![Screenshot from 2021-08-28 20-45-32](https://user-images.githubusercontent.com/64902444/131233674-86f532ab-c5db-4ae1-b42e-50f23c4bcf59.png)
-![Screenshot from 2021-08-28 20-45-05](https://user-images.githubusercontent.com/64902444/131233676-d554d94b-cb22-4bc6-959e-cd5c5e7aad93.png)
-![Screenshot from 2021-08-28 20-44-47](https://user-images.githubusercontent.com/64902444/131233678-e97d8b31-3eb5-480b-8b36-5b1e56797a49.png)
 ![Screenshot from 2021-08-28 20-43-15](https://user-images.githubusercontent.com/64902444/131233680-45c817df-6ede-4963-8e4d-2c9190f1de18.png)
+![Screenshot from 2021-08-28 20-44-47](https://user-images.githubusercontent.com/64902444/131233678-e97d8b31-3eb5-480b-8b36-5b1e56797a49.png)
+![Screenshot from 2021-08-28 20-45-05](https://user-images.githubusercontent.com/64902444/131233676-d554d94b-cb22-4bc6-959e-cd5c5e7aad93.png)
+![Screenshot from 2021-08-28 20-45-32](https://user-images.githubusercontent.com/64902444/131233674-86f532ab-c5db-4ae1-b42e-50f23c4bcf59.png)
+
