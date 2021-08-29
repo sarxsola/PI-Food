@@ -31,6 +31,17 @@ Then
 ```shell
 npm start
 ```
+
+In api create a file called .env with this form:
+
+DB_USER=postgressUser
+DB_PASSWORD=postgressPassword
+DB_HOST=localhost
+
+Replace postgressUser and postgressPassword for your own credentials to connect to postgress. This file will be ignored in the upload to github, since it contains sensible information(credentials)
+
+Aditional to that you will need to create from psql a database called food using command create database food;
+
 ---
 
 ### API
