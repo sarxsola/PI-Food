@@ -85,7 +85,9 @@ const Pagination = ({ recipes }) => {
             
             <div className='pagination'>
                 <ul className='recipesPagination'>
-                    <Cards recipes={renderTodosClean} />
+                    {
+                        renderTodosClean.length > 0 ?  <Cards recipes={renderTodosClean} /> : <p>There's no recipe with that name</p>
+                    }
                 </ul>
 
                 <ul className='page-numbers' id='page-numbers'>

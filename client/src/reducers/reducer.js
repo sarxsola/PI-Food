@@ -75,7 +75,7 @@ function recipeReducer(state = initialState, action) {
             else {
                 return {
                     ...state,
-                    recipes: recipesFilter.sort(function(a, b){
+                    recipes: array1.sort(function(a, b){
                         if(a.title.toUpperCase() > b.title.toUpperCase()) return -1;
                         if(b.title.toUpperCase() > a.title.toUpperCase()) return 1;
                         return 0;
