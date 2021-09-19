@@ -24,6 +24,7 @@ router.get('/recipes', async (req, res) => {
 
         recipesDBClean = [];
 
+        
         recipesDB.map((recipe) => {
             recipesDBClean.push(
                 {
@@ -60,11 +61,10 @@ router.get('/recipes', async (req, res) => {
             })
         })
 
-        console.log(recipesApiClean)
 
         if (recipesDBClean.length < 1) {
             if (recipesApiClean.length === 0) {
-                res.status(400).json("There's no recipe with that name");
+                res.status(400).json([]);
             }
             else {
                 res.json(recipesApiClean);
