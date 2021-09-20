@@ -1,6 +1,6 @@
 export function getAllRecipes(){
     return function(dispatch){
-        return fetch('http://localhost:3001/recipes')
+        return fetch('https://picante-corner-api.herokuapp.com/recipes')
         .then(response => response.json())
         .then(json => {
             dispatch({ type: 'GET_ALL_RECIPES', payload: json});
@@ -10,7 +10,7 @@ export function getAllRecipes(){
 
 export function createRecipe(recipe){
     return function(dispatch){
-        return fetch('http://localhost:3001/form', {
+        return fetch('https://picante-corner-api.herokuapp.com/form', {
             method: 'POST',
             body: JSON.stringify(recipe),
             headers: {
@@ -26,7 +26,7 @@ export function createRecipe(recipe){
 
 export function getRecipe(recipe){
     return function(dispatch){
-        return fetch(`http://localhost:3001/recipes?name=${recipe}`)
+        return fetch(`https://picante-corner-api.herokuapp.com/recipes?name=${recipe}`)
         .then(response => response.json())
         .then(json => {
             dispatch({ type: 'GET_RECIPE', payload: json});
@@ -36,7 +36,7 @@ export function getRecipe(recipe){
 
 export function getRecipeDetail(id){
     return function(dispatch){
-        return fetch(`http://localhost:3001/recipes/${id}`)
+        return fetch(`https://picante-corner-api.herokuapp.com/recipes/${id}`)
         .then(response => response.json())
         .then(json => {
             dispatch({ type: 'GET_RECIPE_DETAIL', payload: json});
